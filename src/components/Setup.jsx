@@ -256,44 +256,54 @@ const Setup = () => {
 
 
   return (
-    <div className={'flex-col text-center p-4'}>
+    <div className={'flex-col text-center p-4 max-w-[500px] mx-auto'}>
       <h1 className={'text-4xl mt-8 mb-12'}>My expenses</h1>
       {/* Set new period */}
-      <form noValidate={false} className={'space-x-1 space-y-1'}>
-        <label htmlFor='date-input'>Set period:</label>
+      <form noValidate={false} className={'space-x-2 flex justify-center items-center'}>
+        <span  className={'text-[1.2rem]'}>Set Date: </span>
         <input
           type='date'
           id='date-input'
           value={periodDate}
           onChange={e => setPeriodDate(e.target.value)}
           required
-          className={'outline-0 border rounded-md px-2 py-0.5'}
+          className={'outline-0 border rounded-md p-2'}
         />
-        <button onClick={setPeriod} className={'border-2 px-2 py-0.5 rounded-md cursor-pointer'}>Confirm</button>
+        <button onClick={setPeriod} className={'border-2 p-2 rounded-md cursor-pointer text-blue-400 bg-slate-800'}>Confirm</button>
       </form>
 
       {/* Overivew*/}
-      <div className={'flex flex-1/3 justify-around my-10 text-[18px]'}>
+      <div className={'flex flex-1/3 justify-around my-10'}>
         <div>
           <p>Income</p>
-          <p>{incomeOverview} {currency}</p>          
+          <div className={'flex items-baseline space-x-1'}>
+            <span className={'text-[1.8rem]'}>{incomeOverview}</span>
+            <span className={''}>{currency}</span>
+          </div>                   
         </div>        
         <div>
           <p>Expenses</p>
-          {expensesOverview === 0 ? 
-            <p>{expensesOverview} {currency}</p> :
-            <p>-{expensesOverview} {currency}</p>           
-          }                  
+          <div className={'flex items-baseline space-x-1'}>           
+            {expensesOverview === 0 ? 
+              <span className={'text-[1.8rem]'}>{expensesOverview}</span> :
+              <span className={'text-[1.8rem]'}>-{expensesOverview}</span>           
+            }
+          <span>{currency}</span>
+          </div>                          
         </div>          
         <div>
           <p>Remaining</p>
-          <p className={'text-blue-400'}>{remainingOverview} {currency}</p>         
+          <div className={'flex items-baseline space-x-1'}>
+            <span className={'text-[1.8rem] text-blue-400'}>{remainingOverview}</span>
+            <span>{currency}</span>
+          </div>
+                   
         </div>
       </div>         
 
       {/* Add income*/}
       <div>
-        <h2 className={'text-left'}>Add income</h2>
+        <h2 className={'text-left text-[1.2rem] text-blue-400'}>Add Income</h2>
         <form
           onSubmit={addIncome}
           noValidate={false}
@@ -307,7 +317,7 @@ const Setup = () => {
             onChange={e => setIncomeName(e.target.value)}
             maxLength={30}
             required
-            className={'border px-2 py-0.5 rounded-md'}
+            className={'border px-2 p-2 rounded-md'}
             />
             <input
               type='number'
@@ -318,16 +328,16 @@ const Setup = () => {
               min={0}
               max={999999}
               required
-              className={'border px-2 py-0.5 rounded-md'}
+              className={'border px-2 p-2 rounded-md'}
             />
           </div>        
-          <button className={'border-2 px-2 py-0.5 rounded-md cursor-pointer'}>Add</button>
+          <button className={'border-2 p-2 rounded-md cursor-pointer text-blue-400 bg-slate-800'}>Add</button>
         </form>
       </div>     
 
       {/* Add expense*/}
       <div>
-        <h2 className={'text-left'}>Add expense</h2>
+        <h2 className={'text-left text-[1.2rem] text-blue-400'}>Add Expense</h2>
         <form
           onSubmit={addExpense}
           className={'space-x-1 mb-4 flex items-baseline'}
@@ -340,7 +350,7 @@ const Setup = () => {
             onChange={e => setExpenseName(e.target.value)}
             maxLength={30}
             required
-            className={'border px-2 py-0.5 rounded-md'}
+            className={'border p-2 rounded-md'}
             />
             <input
               type='number'
@@ -351,12 +361,12 @@ const Setup = () => {
               min={0}
               max={999999}
               required
-              className={'border px-2 py-0.5 rounded-md'}
+              className={'border p-2 rounded-md'}
             />
             <select
               value={expenseCategory}
               onChange={(e) => setExpenseCategory(e.target.value)}
-              className={'border px-2 py-0.5 rounded-md'}
+              className={'border p-2 rounded-md'}
               required
             >
               <option value="" disabled>Select category</option>
@@ -367,13 +377,13 @@ const Setup = () => {
               ))}
             </select>
           </div>        
-          <button className={'border-2 px-2 py-0.5 rounded-md cursor-pointer'}>Add</button>
+          <button className={'border-2 p-2 rounded-md cursor-pointer text-blue-400 bg-slate-800'}>Add</button>
         </form>
       </div>
       
 
       {/* Add category */}
-      <h2 className={'text-left'}>Add category</h2>
+      <h2 className={'text-left text-[1.2rem] text-blue-400'}>Add Category</h2>
       <form className={'flex space-x-1 mb-12'}>
         <input
           type='text'
@@ -383,11 +393,11 @@ const Setup = () => {
           onChange={e => setCategory(e.target.value)}
           maxLength={25}
           required
-          className={'flex-4/5 border px-2 py-0.5 rounded-md'}
+          className={'flex-4/5 border p-2 rounded-md'}
         />
         <button
           onClick={addCategory}
-          className={'border-2 px-2 py-0.5 rounded-md cursor-pointer'}
+          className={'border-2 p-2 rounded-md cursor-pointer text-blue-400 bg-slate-800'}
           >Add
         </button>
       </form>

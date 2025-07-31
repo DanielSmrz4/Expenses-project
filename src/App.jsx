@@ -4,7 +4,7 @@ import Setup from './components/Setup'
 function App() {
 
   return ( 
-    <div className={'max-w-[100vw] min-h-[100vh] flex justify-center'}>
+    <div className={'min-h-[100vh]'}>
       <Setup />
     </div>
   )
