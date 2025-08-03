@@ -21,7 +21,7 @@ const OneCategory = ({ name, records, deleteCategory, currency, deleteRecord }) 
             </button>
           }
         </div>        
-        <div className={'space-x-2 text-[1.25rem] flex items-baseline'}>                    
+        <div className={'space-x-1 text-[1.25rem] flex items-baseline'}>                    
           {name === 'Income' || totalAmount === 0 ?
             <span className={'text-blue-400'}>{totalAmount}</span> :
             <span className={'text-blue-400'}>-{totalAmount}</span>
