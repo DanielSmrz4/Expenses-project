@@ -264,7 +264,7 @@ const Setup = () => {
       <h1 className={'text-4xl mt-4 mb-8'}>My expenses</h1>
       {/* Set new period */}
       <form noValidate={false} className={'space-x-1 flex justify-center items-center'}>
-        <span  className={'text-[1.25rem] text-blue-400'}>Set Date</span>
+        <span  className={'text-[1rem] text-blue-400'}>Set Date</span>
         <input
           type='date'
           id='date-input'
@@ -272,9 +272,9 @@ const Setup = () => {
           placeholder="mm/dd/yyyy"
           onChange={e => setPeriodDate(e.target.value)}
           required
-          className={'outline-0 border rounded-md p-1.5 w-33'}
+          className={'outline-0 border rounded-md p-1.25 w-30'}
         />
-        <button onClick={setPeriod} className={'text-[.75rem] border-2 p-1.5 rounded-md cursor-pointer text-blue-400 bg-slate-800'}>Confirm</button>
+        <button onClick={setPeriod} className={'border-2 p-1.25 rounded-md cursor-pointer text-blue-400 bg-slate-800'}>Confirm</button>
       </form>
 
       {/* Errors */}
@@ -285,7 +285,7 @@ const Setup = () => {
         <div className={'flex flex-col items-center'}>
           <p className={'text-[.75rem]'}>Income</p>
           <div className={'flex items-baseline space-x-1'}>
-            <span className={'text-[1.8rem]'}>{incomeOverview}</span>
+            <span className={'text-[1.5rem]'}>{incomeOverview}</span>
             <span className={''}>{currency}</span>
           </div>                   
         </div>        
@@ -293,8 +293,8 @@ const Setup = () => {
           <p className={'text-[.75rem]'}>Expenses</p>
           <div className={'flex items-baseline space-x-1'}>           
             {expensesOverview === 0 ? 
-              <span className={'text-[1.8rem]'}>{expensesOverview}</span> :
-              <span className={'text-[1.8rem]'}>-{expensesOverview}</span>           
+              <span className={'text-[1.5rem]'}>{expensesOverview}</span> :
+              <span className={'text-[1.5rem]'}>-{expensesOverview}</span>           
             }
           <span>{currency}</span>
           </div>                          
@@ -302,7 +302,7 @@ const Setup = () => {
         <div className={'flex flex-col items-center'}>
           <p className={'text-[.75rem]'}>Remaining</p>
           <div className={'flex items-baseline space-x-1'}>
-            <span className={'text-[1.8rem] text-blue-400'}>{remainingOverview}</span>
+            <span className={'text-[1.5rem] text-blue-400'}>{remainingOverview}</span>
             <span>{currency}</span>
           </div>
                    
@@ -311,7 +311,7 @@ const Setup = () => {
 
       {/* Add income*/}
       <div>
-        <h2 className={'text-left text-[1.25rem] text-blue-400'}>Add Income</h2>
+        <h2 className={'text-[1rem] text-left text-blue-400'}>Add Income</h2>
         <form
           onSubmit={addIncome}
           noValidate={false}
@@ -325,7 +325,7 @@ const Setup = () => {
             onChange={e => setIncomeName(e.target.value)}
             maxLength={30}
             required
-            className={'border p-1.5 rounded-md'}
+            className={'border p-1.25 rounded-md'}
             />
             <input
               type='number'
@@ -336,16 +336,16 @@ const Setup = () => {
               min={0}
               max={999999}
               required
-              className={'border p-1.5 rounded-md'}
+              className={'border p-1.25 rounded-md'}
             />
           </div>        
-          <button className={'border-2 p-1.5 rounded-md cursor-pointer text-blue-400 bg-slate-800'}>Add</button>
+          <button className={'border-2 p-1.25 rounded-md cursor-pointer text-blue-400 bg-slate-800'}>Add</button>
         </form>
       </div>     
 
       {/* Add expense*/}
       <div>
-        <h2 className={'text-left text-[1.25rem] text-blue-400'}>Add Expense</h2>
+        <h2 className={'text-[1rem] text-left text-blue-400'}>Add Expense</h2>
         <form
           onSubmit={addExpense}
           className={'space-x-1 mb-2 flex items-baseline'}
@@ -358,7 +358,7 @@ const Setup = () => {
             onChange={e => setExpenseName(e.target.value)}
             maxLength={30}
             required
-            className={'border p-1.5 rounded-md'}
+            className={'border p-1.25 rounded-md'}
             />
             <input
               type='number'
@@ -369,12 +369,12 @@ const Setup = () => {
               min={0}
               max={999999}
               required
-              className={'border p-1.5 rounded-md'}
+              className={'border p-1.25 rounded-md'}
             />
             <select
               value={expenseCategory}
               onChange={(e) => setExpenseCategory(e.target.value)}
-              className={'border p-1.5 rounded-md'}
+              className={'border p-1.25 rounded-md'}
               required
             >
               <option value="" disabled>Select category</option>
@@ -385,13 +385,13 @@ const Setup = () => {
               ))}
             </select>
           </div>        
-          <button className={'border-2 p-1.5 rounded-md cursor-pointer text-blue-400 bg-slate-800'}>Add</button>
+          <button className={'border-2 p-1.25 rounded-md cursor-pointer text-blue-400 bg-slate-800'}>Add</button>
         </form>
       </div>
       
 
       {/* Add category */}
-      <h2 className={'text-left text-[1.25rem] text-blue-400'}>Add Category</h2>
+      <h2 className={'text-[1rem] text-left text-blue-400'}>Add Category</h2>
       <form className={'flex space-x-1 mb-12'}>
         <input
           type='text'
@@ -401,11 +401,11 @@ const Setup = () => {
           onChange={e => setCategory(e.target.value)}
           maxLength={25}
           required
-          className={'flex-4/5 border p-1.5 rounded-md'}
+          className={'flex-4/5 border p-1.25 rounded-md'}
         />
         <button
           onClick={addCategory}
-          className={'border-2 p-1.5 rounded-md cursor-pointer text-blue-400 bg-slate-800'}
+          className={'border-2 p-1.25 rounded-md cursor-pointer text-blue-400 bg-slate-800'}
           >Add
         </button>
       </form>
