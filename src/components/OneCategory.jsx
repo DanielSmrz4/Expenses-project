@@ -11,7 +11,7 @@ const OneCategory = ({ name, records, deleteCategory, currency, deleteRecord }) 
     <div className={'pb-4'}>
       <div className={'flex justify-between items-center'}>
         <div className={'flex items-baseline space-x-2'}>
-          <h2 className={'text-blue-400 text-[1.4rem]'}>{name}</h2>
+          <h2 className={'text-blue-400 text-[1.25rem]'}>{name}</h2>
           {name != 'Income' &&
             <button
               onClick={() => deleteCategory(name)}
@@ -21,7 +21,7 @@ const OneCategory = ({ name, records, deleteCategory, currency, deleteRecord }) 
             </button>
           }
         </div>        
-        <div className={'space-x-2 text-[1.2rem] flex items-baseline'}>                    
+        <div className={'space-x-2 text-[1.25rem] flex items-baseline'}>                    
           {name === 'Income' || totalAmount === 0 ?
             <span className={'text-blue-400'}>{totalAmount}</span> :
             <span className={'text-blue-400'}>-{totalAmount}</span>
@@ -29,8 +29,8 @@ const OneCategory = ({ name, records, deleteCategory, currency, deleteRecord }) 
           <span className={'text-[1rem]'}>{currency}</span>                                     
         </div>
       </div>
-        
-      <ul className={'ml-2 my-4 space-y-1'}>
+      <hr />
+      <ul className={'ml-1 mt-1 mb-4 space-y-1'}>
         {records.length === 0 ? (
           <p>No records in this category</p>                      
         ) : (
@@ -50,16 +50,13 @@ const OneCategory = ({ name, records, deleteCategory, currency, deleteRecord }) 
                   {oneRecord.category === 'Income' ?             
                   <span>{oneRecord.amount} {currency}</span> :
                   <span>-{oneRecord.amount} {currency}</span>
-                  }
-                  
-                </div>
-                
+                  }                 
+                </div>                
               </li>
             )                                        
           })
         )}
       </ul>
-      <hr />
     </div>
   )
 }

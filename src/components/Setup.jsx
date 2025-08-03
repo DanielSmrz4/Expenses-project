@@ -61,9 +61,11 @@ const Setup = () => {
     }
 
     // Validate incomeAmount
-    const amount = parseInt(incomeAmount);
-    setError('Enter valid amount');
-    if (!amount) return; // Skip invalid inputs
+    const amount = parseInt(incomeAmount);   
+    if (!amount) {
+      setError('Enter valid amount');
+      return;
+    } 
 
     // Calculate new income and save to state and localStorage
     const newIncome = incomeOverview + amount;
@@ -104,9 +106,11 @@ const Setup = () => {
     }
 
     // Validate expenseAmount
-    const amount = parseInt(expenseAmount);
-    setError('Enter valid amount');
-    if (!amount) return;
+    const amount = parseInt(expenseAmount);   
+    if (!amount) {
+      setError('Enter valid amount');
+      return;
+    } 
 
     // Calculate new expenses and save to state and localStorage
     const newExpenses = expensesOverview + amount;
@@ -257,32 +261,36 @@ const Setup = () => {
 
   return (
     <div className={'flex-col text-center p-4 max-w-[500px] mx-auto'}>
-      <h1 className={'text-4xl mt-8 mb-12'}>My expenses</h1>
+      <h1 className={'text-4xl mt-4 mb-8'}>My expenses</h1>
       {/* Set new period */}
-      <form noValidate={false} className={'space-x-2 flex justify-center items-center'}>
-        <span  className={'text-[1.2rem]'}>Set Date: </span>
+      <form noValidate={false} className={'space-x-1 flex justify-center items-center'}>
+        <span  className={'text-[1.25rem] text-blue-400'}>Set Date</span>
         <input
           type='date'
           id='date-input'
           value={periodDate}
+          placeholder="mm/dd/yyyy"
           onChange={e => setPeriodDate(e.target.value)}
           required
-          className={'outline-0 border rounded-md p-2'}
+          className={'outline-0 border rounded-md p-1.5 w-33'}
         />
-        <button onClick={setPeriod} className={'border-2 p-2 rounded-md cursor-pointer text-blue-400 bg-slate-800'}>Confirm</button>
+        <button onClick={setPeriod} className={'text-[.75rem] border-2 p-1.5 rounded-md cursor-pointer text-blue-400 bg-slate-800'}>Confirm</button>
       </form>
 
+      {/* Errors */}
+      {error && <p className={'text-red-800 mb-8 mt-8'}>{error}</p>}
+
       {/* Overivew*/}
-      <div className={'flex flex-1/3 justify-around my-10'}>
-        <div>
-          <p>Income</p>
+      <div className={'flex flex-1/3 justify-around mt-6 mb-4'}>
+        <div className={'flex flex-col items-center'}>
+          <p className={'text-[.75rem]'}>Income</p>
           <div className={'flex items-baseline space-x-1'}>
             <span className={'text-[1.8rem]'}>{incomeOverview}</span>
             <span className={''}>{currency}</span>
           </div>                   
         </div>        
-        <div>
-          <p>Expenses</p>
+        <div className={'flex flex-col items-center'}>
+          <p className={'text-[.75rem]'}>Expenses</p>
           <div className={'flex items-baseline space-x-1'}>           
             {expensesOverview === 0 ? 
               <span className={'text-[1.8rem]'}>{expensesOverview}</span> :
@@ -291,8 +299,8 @@ const Setup = () => {
           <span>{currency}</span>
           </div>                          
         </div>          
-        <div>
-          <p>Remaining</p>
+        <div className={'flex flex-col items-center'}>
+          <p className={'text-[.75rem]'}>Remaining</p>
           <div className={'flex items-baseline space-x-1'}>
             <span className={'text-[1.8rem] text-blue-400'}>{remainingOverview}</span>
             <span>{currency}</span>
@@ -303,11 +311,11 @@ const Setup = () => {
 
       {/* Add income*/}
       <div>
-        <h2 className={'text-left text-[1.2rem] text-blue-400'}>Add Income</h2>
+        <h2 className={'text-left text-[1.25rem] text-blue-400'}>Add Income</h2>
         <form
           onSubmit={addIncome}
           noValidate={false}
-          className={'space-x-1 mb-4 flex items-baseline'}
+          className={'space-x-1 mb-2 flex items-baseline'}
         >
           <div className={'flex flex-col flex-4/5 space-y-1'}>
             <input
@@ -317,7 +325,7 @@ const Setup = () => {
             onChange={e => setIncomeName(e.target.value)}
             maxLength={30}
             required
-            className={'border px-2 p-2 rounded-md'}
+            className={'border p-1.5 rounded-md'}
             />
             <input
               type='number'
@@ -328,19 +336,19 @@ const Setup = () => {
               min={0}
               max={999999}
               required
-              className={'border px-2 p-2 rounded-md'}
+              className={'border p-1.5 rounded-md'}
             />
           </div>        
-          <button className={'border-2 p-2 rounded-md cursor-pointer text-blue-400 bg-slate-800'}>Add</button>
+          <button className={'border-2 p-1.5 rounded-md cursor-pointer text-blue-400 bg-slate-800'}>Add</button>
         </form>
       </div>     
 
       {/* Add expense*/}
       <div>
-        <h2 className={'text-left text-[1.2rem] text-blue-400'}>Add Expense</h2>
+        <h2 className={'text-left text-[1.25rem] text-blue-400'}>Add Expense</h2>
         <form
           onSubmit={addExpense}
-          className={'space-x-1 mb-4 flex items-baseline'}
+          className={'space-x-1 mb-2 flex items-baseline'}
           >
           <div className={'flex flex-col flex-4/5 space-y-1'}>
             <input
@@ -350,7 +358,7 @@ const Setup = () => {
             onChange={e => setExpenseName(e.target.value)}
             maxLength={30}
             required
-            className={'border p-2 rounded-md'}
+            className={'border p-1.5 rounded-md'}
             />
             <input
               type='number'
@@ -361,12 +369,12 @@ const Setup = () => {
               min={0}
               max={999999}
               required
-              className={'border p-2 rounded-md'}
+              className={'border p-1.5 rounded-md'}
             />
             <select
               value={expenseCategory}
               onChange={(e) => setExpenseCategory(e.target.value)}
-              className={'border p-2 rounded-md'}
+              className={'border p-1.5 rounded-md'}
               required
             >
               <option value="" disabled>Select category</option>
@@ -377,13 +385,13 @@ const Setup = () => {
               ))}
             </select>
           </div>        
-          <button className={'border-2 p-2 rounded-md cursor-pointer text-blue-400 bg-slate-800'}>Add</button>
+          <button className={'border-2 p-1.5 rounded-md cursor-pointer text-blue-400 bg-slate-800'}>Add</button>
         </form>
       </div>
       
 
       {/* Add category */}
-      <h2 className={'text-left text-[1.2rem] text-blue-400'}>Add Category</h2>
+      <h2 className={'text-left text-[1.25rem] text-blue-400'}>Add Category</h2>
       <form className={'flex space-x-1 mb-12'}>
         <input
           type='text'
@@ -393,17 +401,14 @@ const Setup = () => {
           onChange={e => setCategory(e.target.value)}
           maxLength={25}
           required
-          className={'flex-4/5 border p-2 rounded-md'}
+          className={'flex-4/5 border p-1.5 rounded-md'}
         />
         <button
           onClick={addCategory}
-          className={'border-2 p-2 rounded-md cursor-pointer text-blue-400 bg-slate-800'}
+          className={'border-2 p-1.5 rounded-md cursor-pointer text-blue-400 bg-slate-800'}
           >Add
         </button>
       </form>
-
-      {/* Errors */}
-      {error && <p className={'text-red-800 mb-8'}>{error}</p>}
 
       {/* Map categories */}
       <ul>        
@@ -426,7 +431,6 @@ const Setup = () => {
       </ul>
 
       <button className={'text-red-800 cursor-pointer m-4 border-2 px-2 py-0.5 rounded-md'} onClick={resetData}>Reset</button>
-
     </div>
   )
 }
