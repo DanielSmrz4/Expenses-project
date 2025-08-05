@@ -21,10 +21,19 @@ const Setup = () => {
   const [currency, setCurrency] = useState('Kč'); // Currency
 
 
+  // =======================================
+  // GENERAL
+  // =======================================
+  
   // Generate unique ID for records
   const generateUniqueId = () => {
     return `${Date.now()}-${Math.random().toString(36)}`;
   };
+
+
+  // =======================================
+  // MAIN FUNCTIONS
+  // =======================================
 
 
   const setPeriod = (e) => {
@@ -162,6 +171,11 @@ const Setup = () => {
   }
 
 
+  // ========================================
+  // DELETE
+  // ========================================
+
+
   const deleteCategory = (categoryToDelete) => {    
     // Remove category from categories
     const updatedCategories = categories.filter((cat) => cat !== categoryToDelete);
@@ -219,6 +233,16 @@ const Setup = () => {
   }
 
 
+  const deleteConfirmation = () => {
+    document.createElement('div')
+  }
+
+
+  // ========================================
+  // DATA MANIPULATION
+  // ========================================
+
+
   // Load saved data from localStorage on mount
   useEffect(() => {
     const savedDate = localStorage.getItem('periodDate');
@@ -254,10 +278,13 @@ const Setup = () => {
   setExpensesOverview(0);
   setRemainingOverview(0);
   setCategories(defaultCategories);
-  setRecords([]);
-  
+  setRecords([]); 
 };
 
+
+// ========================================
+// RETURN
+// ========================================
 
   return (
     <div className={'flex-col text-center p-4 max-w-[500px] mx-auto'}>
