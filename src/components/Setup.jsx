@@ -4,7 +4,7 @@ import OneCategory from './OneCategory'
 
 const Setup = () => {
   
-  const defaultCategories = ['Income', 'Must', 'Food', 'For me', 'Other'];
+  const defaultCategories = ['Income', 'Necessary', 'Food', 'Food at work', 'Other', 'For me', 'Subscriptions', 'Investements'];
   const [periodDate, setPeriodDate] = useState(''); // Date  
   const [incomeAmount, setIncomeAmount] = useState(''); // Income
   const [incomeName, setIncomeName] = useState('');  
@@ -22,7 +22,7 @@ const Setup = () => {
 
 
   // =======================================
-  // GENERAL
+  // GENERAL FUNCTIONS
   // =======================================
   
   // Generate unique ID for records
@@ -74,8 +74,14 @@ const Setup = () => {
     if (!amount) {
       setError('Enter valid amount');
       return;
-    } 
-
+    }
+  
+    //  Validate leading zeores
+    if (incomeAmount.startsWith('0') && incomeAmount.length > 1) {
+      setError('Enter amount without leading zeores');
+      return;
+    }
+    
     // Calculate new income and save to state and localStorage
     const newIncome = incomeOverview + amount;
     setIncomeOverview(newIncome);
@@ -119,7 +125,13 @@ const Setup = () => {
     if (!amount) {
       setError('Enter valid amount');
       return;
-    } 
+    }
+
+    //  Validate leading zeores
+    if (expenseAmount.startsWith('0') && expenseAmount.length > 1) {
+      setError('Enter amount without leading zeores');
+      return;
+    }
 
     // Calculate new expenses and save to state and localStorage
     const newExpenses = expensesOverview + amount;
@@ -156,7 +168,7 @@ const Setup = () => {
 
     // Validate category 
     if (!category) {
-      setError('Add category name')
+      setError('Enter category name')
       return
     } else if (categoriesInLowerCase.includes(category.toLowerCase())) {
       setError('Category already exists')
@@ -171,76 +183,71 @@ const Setup = () => {
   }
 
 
-  // ========================================
-  // DELETE
-  // ========================================
+ // ========================================
+ // DELETE
+ // ========================================
 
 
   const deleteCategory = (categoryToDelete) => {    
-    // Remove category from categories
-    const updatedCategories = categories.filter((cat) => cat !== categoryToDelete);
-    setCategories(updatedCategories);
-    localStorage.setItem('categories', JSON.stringify(updatedCategories));
+      // Remove category from categories
+      const updatedCategories = categories.filter((cat) => cat !== categoryToDelete);
+      setCategories(updatedCategories);
+      localStorage.setItem('categories', JSON.stringify(updatedCategories));
 
-    // Remove records associated with the category
-    if (records.length > 0) {
-      const updatedRecords = records.filter((record) => record.category !== categoryToDelete);
-      setRecords(updatedRecords);
-      localStorage.setItem('records', JSON.stringify(updatedRecords));
-    }    
+      // Remove records associated with the category
+      if (records.length > 0) {
+        const updatedRecords = records.filter((record) => record.category !== categoryToDelete);
+        setRecords(updatedRecords);
+        localStorage.setItem('records', JSON.stringify(updatedRecords));
+      }    
 
-    // Reset category state if the deleted category was selected
-    if (category === categoryToDelete) {
-      setCategory('');
+      // Reset category state if the deleted category was selected
+      if (category === categoryToDelete) {
+        setCategory('');
+      }
+
+      // Update overview
+      if (remainingOverview) {
+        const updatedRecords = records.filter((record) => record.category !== categoryToDelete);
+        const savedIncome = parseInt(localStorage.getItem('income'));    
+        const updatedExpensesRecords = updatedRecords.filter((record) => record.category !== 'Income');   
+        const updatedExpensesAmount = updatedExpensesRecords.reduce((sum, record) => sum + parseInt(record.amount), 0);
+        
+        localStorage.setItem('expenses', updatedExpensesAmount);
+        setExpensesOverview(updatedExpensesAmount);
+        setRemainingOverview(savedIncome - updatedExpensesAmount);
+      }    
     }
-
-    // Update overview
-    if (remainingOverview) {
-      const updatedRecords = records.filter((record) => record.category !== categoryToDelete);
-      const savedIncome = parseInt(localStorage.getItem('income'));    
-      const updatedExpensesRecords = updatedRecords.filter((record) => record.category !== 'Income');   
-      const updatedExpensesAmount = updatedExpensesRecords.reduce((sum, record) => sum + parseInt(record.amount), 0);
-      
-      localStorage.setItem('expenses', updatedExpensesAmount);
-      setExpensesOverview(updatedExpensesAmount);
-      setRemainingOverview(savedIncome - updatedExpensesAmount);
-    }    
-  }
 
 
   const deleteRecord = (recordId, recordCategory) => {
-    const updatedRecords = records.filter((record) => record.id !== recordId);
-    const savedIncome = parseInt(localStorage.getItem('income'));
-    const savedExpenses = parseInt(localStorage.getItem('expenses'));
+      const updatedRecords = records.filter((record) => record.id !== recordId);
+      const savedIncome = parseInt(localStorage.getItem('income'));
+      const savedExpenses = parseInt(localStorage.getItem('expenses'));
 
-    setRecords(updatedRecords);
-    localStorage.setItem('records', JSON.stringify(updatedRecords));
+      setRecords(updatedRecords);
+      localStorage.setItem('records', JSON.stringify(updatedRecords));
 
-    if (recordCategory === 'Income') {
-      const updatedIncomeRecords = updatedRecords.filter((record) => record.category === 'Income');
-      const updatedIncomeAmount = updatedIncomeRecords.reduce((sum, record) => sum + parseInt(record.amount), 0);
-      localStorage.setItem('income', updatedIncomeAmount);
-      setIncomeOverview(updatedIncomeAmount);
-      setRemainingOverview(updatedIncomeAmount - savedExpenses || 0);
-    } 
-    else if (recordCategory !== 'Income') {
-      const updatedExpensesRecords = updatedRecords.filter((record) => record.category !== 'Income');   
-      const updatedExpensesAmount = updatedExpensesRecords.reduce((sum, record) => sum + parseInt(record.amount), 0);
-      localStorage.setItem('expenses', updatedExpensesAmount);
-      setExpensesOverview(updatedExpensesAmount);
-      setRemainingOverview(savedIncome - updatedExpensesAmount || 0);
-    }   
-  }
-
-
-  const deleteConfirmation = () => {
-    document.createElement('div')
-  }
+      if (recordCategory === 'Income') {
+        const updatedIncomeRecords = updatedRecords.filter((record) => record.category === 'Income');
+        const updatedIncomeAmount = updatedIncomeRecords.reduce((sum, record) => sum + parseInt(record.amount), 0);
+        localStorage.setItem('income', updatedIncomeAmount);
+        setIncomeOverview(updatedIncomeAmount);
+        setRemainingOverview(updatedIncomeAmount - savedExpenses || 0);
+      } 
+      else if (recordCategory !== 'Income') {
+        const updatedExpensesRecords = updatedRecords.filter((record) => record.category !== 'Income');   
+        const updatedExpensesAmount = updatedExpensesRecords.reduce((sum, record) => sum + parseInt(record.amount), 0);
+        localStorage.setItem('expenses', updatedExpensesAmount);
+        setExpensesOverview(updatedExpensesAmount);
+        setRemainingOverview(savedIncome - updatedExpensesAmount || 0);
+      }   
+    }
 
 
-  // ========================================
-  // DATA MANIPULATION
-  // ========================================
+ // ========================================
+ // DATA MANIPULATION
+ // ========================================
 
 
   // Load saved data from localStorage on mount
@@ -266,25 +273,20 @@ const Setup = () => {
   }, [])
 
 
-  // Reset data
   const resetData = () => {
-  localStorage.removeItem('periodDate');
-  localStorage.removeItem('income');
-  localStorage.removeItem('expenses');
-  localStorage.removeItem('categories');
-  localStorage.removeItem('records');
-  setPeriodDate('');
-  setIncomeOverview(0);
-  setExpensesOverview(0);
-  setRemainingOverview(0);
-  setCategories(defaultCategories);
-  setRecords([]); 
-};
+    localStorage.removeItem('periodDate');
+    localStorage.removeItem('income');
+    localStorage.removeItem('expenses');
+    localStorage.removeItem('categories');
+    localStorage.removeItem('records');
+    setPeriodDate('');
+    setIncomeOverview(0);
+    setExpensesOverview(0);
+    setRemainingOverview(0);
+    setCategories(defaultCategories);
+    setRecords([]); 
+  };
 
-
-// ========================================
-// RETURN
-// ========================================
 
   return (
     <div className={'flex-col text-center p-4 max-w-[500px] mx-auto'}>
@@ -299,7 +301,7 @@ const Setup = () => {
           placeholder="mm/dd/yyyy"
           onChange={e => setPeriodDate(e.target.value)}
           required
-          className={'outline-0 border rounded-md p-1.25 w-30'}
+          className={'outline-0 border rounded-md p-1.25 min-w-25 max-w-fit text-center'}
         />
         <button onClick={setPeriod} className={'border-2 p-1.25 rounded-md cursor-pointer text-blue-400 bg-slate-800'}>Confirm</button>
       </form>

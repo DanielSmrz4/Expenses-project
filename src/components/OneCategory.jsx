@@ -2,10 +2,10 @@ import { useState } from "react"
 import { FaTrash } from 'react-icons/fa';
 
 
-const OneCategory = ({ name, records, deleteCategory, currency, deleteRecord, deleteConfirmation }) => {
+const OneCategory = ({ name, records, deleteCategory, currency, deleteRecord }) => {
 
-  
   const totalAmount = records.reduce((sum, record) => sum + parseInt(record.amount), 0);
+
 
   return (
     <div className={'pb-4'}>
@@ -14,8 +14,8 @@ const OneCategory = ({ name, records, deleteCategory, currency, deleteRecord, de
           <h2 className={'text-blue-400 text-[1.25rem]'}>{name}</h2>
           {name != 'Income' &&
             <button
-              onClick={() => deleteCategory(name)}
               className={'cursor-pointer'}
+              onClick={() => deleteCategory(name)}
               >
               <FaTrash className={'text-slate-600'} />  
             </button>
@@ -40,8 +40,7 @@ const OneCategory = ({ name, records, deleteCategory, currency, deleteRecord, de
                 <div className={'flex items-center space-x-2'}>
                   <button
                     className={'cursor-pointer'}
-                    // onClick={() => deleteRecord(oneRecord.id, oneRecord.category)}
-                    onClick={() => deleteConfirmation()}
+                    onClick={() => deleteRecord(oneRecord.id, oneRecord.category)}
                   >
                     <FaTrash className={'text-slate-500'} />
                   </button>
